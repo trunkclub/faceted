@@ -105,7 +105,7 @@ module Faceted
     end
 
     def object
-      @object ||= self.id ? eval(self.class.presented_class).find(self.id) : nil
+      @object ||= self.id ? eval(self.class.presented_class).find(self.id) : eval(self.class.presented_class).new
     end
 
     def object=(obj)
