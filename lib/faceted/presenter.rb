@@ -120,7 +120,7 @@ module Faceted
     end
 
     def to_hash
-      self.class.fields.inject({}) {|h,k| h[k] = self.send(k)}
+      self.class.fields.inject({}) {|h,k| h[k] = self.send(k); h}
     end
 
   end
