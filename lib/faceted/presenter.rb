@@ -24,11 +24,6 @@ module Faceted
           define_method :"#{bare_name}" do
             klass.new(:id => self.send(field))
           end
-        else
-          klass = eval "::#{presented_class}"
-          define_method :"#{presented_class.downcase}" do
-            klass.new(:id => self.id)
-          end
         end
       end
 
@@ -77,6 +72,10 @@ module Faceted
 
       def presents(name, args={})
         @presents = args[:class_name] || name.to_s.classify
+        klass = eval "::#{@presents}"
+        define_method :"#{@presents.downcase}" do
+          self.object
+        end
       end
 
       def scope
