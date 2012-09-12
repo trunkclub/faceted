@@ -26,7 +26,7 @@ module Faceted
           end
         else
           klass = eval "::#{presented_class}"
-          define_method :"#{presented_class}" do
+          define_method :"#{presented_class.downcase}" do
             klass.new(:id => self.id)
           end
         end
