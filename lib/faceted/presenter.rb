@@ -84,7 +84,7 @@ module Faceted
       end
 
       def where(args)
-        eval(presented_class).where(args)
+        materialize(eval(presented_class).where(args))
       end
 
     end
