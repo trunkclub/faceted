@@ -3,6 +3,7 @@ module Faceted
   module Presenter
 
     require 'json'
+    require 'active_support/core_ext/hash'
 
     # Class methods ==========================================================
 
