@@ -27,7 +27,7 @@ module Faceted
         else
           klass = eval "::#{presented_class}"
           define_method :"#{presented_class}" do
-            klass.new(:id => self.send(field))
+            klass.new(:id => self.id)
           end
         end
       end
@@ -44,7 +44,7 @@ module Faceted
           instance_variable_set("@#{name}", val)
         end
 
-        build_association_from(name.to_s) if name.to_s.include?("_id") && ! args[:skip_association]
+        build_association_from(name.to_s) if name.to_s.include?("id") && ! args[:skip_association]
 
       end
 
