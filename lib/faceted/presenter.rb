@@ -25,8 +25,8 @@ module Faceted
             klass.new(:id => self.send(field))
           end
         else
-          klass = eval "::#{self.presented_class}"
-          define_method :"#{self.presented_class}" do
+          klass = eval "::#{presented_class}"
+          define_method :"#{presented_class}" do
             klass.new(:id => self.send(field))
           end
         end
