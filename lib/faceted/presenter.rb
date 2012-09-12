@@ -82,7 +82,7 @@ module Faceted
     def initialize(args={})
       self.id = args[:id]
       self.initialize_with_object
-      args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.blank? }
+      ! args.empty && args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.blank? }
       self.errors = []
       self.success = true
     end
