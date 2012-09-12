@@ -17,10 +17,17 @@ module Faceted
     module ClassMethods
 
       def build_association_from(field)
-        bare_name = field.gsub("_id", "")
-        klass = eval "#{scope}#{bare_name.classify}"
-        define_method :"#{bare_name}" do
-          klass.new(:id => self.send(field))
+        bare_name = field.gsub(/_id$/, '')
+        if field =~ /_id$/
+          klass = eval "#{scope}#{bare_name.classify}"
+          define_method :"#{bare_name}" do
+            klass.new(:id => self.send(field))
+          end
+        else
+          klass = eval "::#{self.presented_class}"
+          define_method :"#{self.presented_class}" do
+            klass.new(:id => self.send(field))
+          end
         end
       end
 
