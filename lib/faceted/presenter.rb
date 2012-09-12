@@ -83,6 +83,10 @@ module Faceted
         parent.to_s == "Object" ? "::" : "#{parent.to_s}::"
       end
 
+      def where(args)
+        eval(presented_class).where(args)
+      end
+
     end
 
     # Instance methods =======================================================
