@@ -60,6 +60,7 @@ module Faceted
       def materialize(objects=[])
         objects.compact.inject([]) do |a, object|
           presenter = self.new
+          presenter.id = object.id
           presenter.object = object
           presenter.initialize_with_object
           a << presenter
