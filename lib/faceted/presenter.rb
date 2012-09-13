@@ -50,7 +50,7 @@ module Faceted
       end
 
       def fields
-        @fields ||= []
+        @fields ||= [:id]
       end
 
       def fields=(*args)
@@ -60,7 +60,6 @@ module Faceted
       def materialize(objects=[])
         objects.compact.inject([]) do |a, object|
           presenter = self.new
-          presenter.id = object.id
           presenter.object = object
           presenter.initialize_with_object
           a << presenter
@@ -111,6 +110,7 @@ module Faceted
 
     def object=(obj)
       @object = obj
+      self.id = obj.id
     end
 
     def save
