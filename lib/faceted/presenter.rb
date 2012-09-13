@@ -100,7 +100,7 @@ module Faceted
 
     def initialize_with_object
       return unless object
-      object.attributes.each{ |k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") }
+      self.class.fields.each{ |k| self.send("#{k}=", self.object.send(k)) if self.respond_to?("#{k}=") }
     end
 
     def object
