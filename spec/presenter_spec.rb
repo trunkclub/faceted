@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 class Musician # pretend that this is an AR model
-  attr_accessor :id, :name, :rating, :errors
+  attr_accessor :id, :name, :rating, :errors, :birthplace_id
   def initialize(params={}); params.each{|k,v| self.send("#{k}=",v) if self.respond_to?(k)}; end
   def attributes; {:id => self.id, :name => self.name, :rating => self.rating}; end
 end
