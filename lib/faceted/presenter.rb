@@ -115,7 +115,9 @@ module Faceted
 
     def save
       self.class.fields.each do |k|
-        self.object.send("#{k}=", self.send(k)) if self.object.respond_to?("#{k}=")
+        if val = self.send(k)
+          self.object.send("#{k}=", val) if self.object.respond_to?("#{k}=")
+        end
       end
       self.object.save!
     end
