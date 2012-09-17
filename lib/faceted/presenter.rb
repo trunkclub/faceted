@@ -19,11 +19,9 @@ module Faceted
 
       def build_association_from(field)
         bare_name = field.gsub(/_id$/, '')
-        if field =~ /_id$/
-          klass = eval "#{scope}#{bare_name.classify}"
-          define_method :"#{bare_name}" do
-            klass.new(:id => self.send(field))
-          end
+        klass = eval "#{scope}#{bare_name.classify}"
+        define_method :"#{bare_name}" do
+          klass.new(:id => self.send(field))
         end
       end
 
@@ -115,7 +113,7 @@ module Faceted
 
     def save
       self.class.fields.each do |k|
-        if val = self.send(k)
+        if val = self.send(k) && ! val.empty?
           self.object.send("#{k}=", val) if self.object.respond_to?("#{k}=")
         end
       end
