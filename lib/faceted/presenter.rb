@@ -53,10 +53,6 @@ module Faceted
         @fields ||= [:id]
       end
 
-      def fields=(*args)
-        fields << args
-      end
-
       def materialize(objects=[])
         objects.compact.inject([]) do |a, object|
           presenter = self.new
