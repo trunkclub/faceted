@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "faceted"
-  s.version = "0.4.15"
+  s.version = "0.4.16"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ehmke", "Max Thom Stahl"]
-  s.date = "2012-09-14"
+  s.date = "2012-09-17"
   s.description = "Provides useful tools for API implementations."
   s.email = "corey@trunkclub.com"
   s.extra_rdoc_files = [
