@@ -1,4 +1,5 @@
 module Faceted
-  require 'faceted/presenter'
   require 'faceted/collector'
+  require 'faceted/controller'
+  require 'faceted/presenter'
 end
