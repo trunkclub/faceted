@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "faceted"
-  s.version = "0.6.4"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ehmke", "Max Thom Stahl"]
@@ -14,8 +14,7 @@ Gem::Specification.new do |s|
   s.email = "corey@trunkclub.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.md",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".rspec",
@@ -23,13 +22,15 @@ Gem::Specification.new do |s|
     "Gemfile.lock",
     "LICENSE.txt",
     "README.md",
-    "README.rdoc",
     "Rakefile",
     "VERSION",
     "faceted.gemspec",
     "lib/faceted.rb",
     "lib/faceted/collector.rb",
     "lib/faceted/controller.rb",
+    "lib/faceted/has_object.rb",
+    "lib/faceted/interface.rb",
+    "lib/faceted/model.rb",
     "lib/faceted/presenter.rb",
     "spec/collector_spec.rb",
     "spec/presenter_spec.rb",
