@@ -5,7 +5,7 @@ module Faceted
     require 'json'
     require 'active_support/core_ext/hash'
 
-    # Class methods =============================================================
+    # Class methods ============================================================
 
     def self.included(base)
       base.extend ActiveModel::Naming
