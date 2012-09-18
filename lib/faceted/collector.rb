@@ -19,7 +19,7 @@ module Faceted
       def collects(name, args={})
         @collects = eval "#{scope}#{args[:class_name] || name.to_s.classify}"
         define_method :"#{name.downcase}" do
-          self.objects
+          objects
         end
         define_method :finder do
           {"#{args[:find_by]}" => self.send(args[:find_by])}
@@ -45,13 +45,15 @@ module Faceted
       self.success = true
     end
 
+    def to_hash
+      objects.map{|o| o.to_hash}
+    end
+
+    private
+
     def objects
       return unless self.class.collected_class
       @objects ||= self.class.collected_class.where(self.finder)
-    end
-
-    def to_hash
-      self.objects.map{|o| o.to_hash}
     end
 
   end

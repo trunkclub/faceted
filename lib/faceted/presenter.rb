@@ -27,6 +27,12 @@ module Faceted
         end
       end
 
+      def create(params={})
+        obj = self.new(params)
+        obj.save
+        obj
+      end
+
       def field(name, args={})
 
         fields << name
@@ -41,12 +47,6 @@ module Faceted
 
         build_association_from(name.to_s) if name.to_s.include?("id") && ! args[:skip_association]
 
-      end
-
-      def create(params={})
-        object = self.new(params)
-        object.save
-        object
       end
 
       def fields
@@ -67,10 +67,10 @@ module Faceted
       end
 
       def presents(name, args={})
-        @presents = args[:class_name] || name.to_s.classify
-        klass = eval "::#{@presents}"
-        define_method :"#{@presents.downcase}" do
-          self.object
+        class_name = args[:class_name] || name.to_s.classify
+        @presents = eval(class_name)
+        define_method :"#{class_name.downcase}" do
+          object
         end
       end
 
@@ -79,7 +79,7 @@ module Faceted
       end
 
       def where(args)
-        materialize(eval(presented_class).where(args))
+        materialize(presented_class.where(args))
       end
 
     end
@@ -88,20 +88,31 @@ module Faceted
 
     def initialize(args={})
       self.id = args[:id]
-      self.initialize_with_object
+      initialize_with_object
       ! args.empty? && args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.blank? }
       self.errors = []
       self.success = true
     end
 
+    def save
+      schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if object.respond_to?("#{k}=") }
+      object.save!
+    end
+
+    def to_hash
+      schema_fields.inject({}) {|h,k| h[k] = self.send(k); h}
+    end
+
+    private
+
     def initialize_with_object
       return unless object
-      self.class.fields.each{ |k| self.send("#{k}=", self.object.send(k)) if self.respond_to?("#{k}=") }
+      schema_fields.each{ |k| self.send("#{k}=", object.send(k)) if self.respond_to?("#{k}=") }
     end
 
     def object
       return unless self.class.presented_class
-      @object ||= self.id ? eval(self.class.presented_class).find(self.id) : eval(self.class.presented_class).new
+      @object ||= self.id ? self.class.presented_class.find(self.id) : self.class.presented_class.new
     end
 
     def object=(obj)
@@ -109,13 +120,8 @@ module Faceted
       self.id = obj.id
     end
 
-    def save
-      self.class.fields.each{ |k| self.object.send("#{k}=", self.send(k)) if self.object.respond_to?("#{k}=") }
-      self.object.save!
-    end
-
-    def to_hash
-      self.class.fields.inject({}) {|h,k| h[k] = self.send(k); h}
+    def schema_fields
+      self.class.fields
     end
 
   end
