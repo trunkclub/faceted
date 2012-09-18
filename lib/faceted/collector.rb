@@ -2,14 +2,14 @@ module Faceted
 
   module Collector
 
-    require 'json'
-    require 'active_support/core_ext/hash'
+    include Faceted::Model
 
     def self.included(base)
       base.extend ActiveModel::Naming
       base.send(:attr_accessor, :errors)
       base.send(:attr_accessor, :success)
       base.extend ClassMethods
+      base.extend Faceted::Model::ModelClassMethods
     end
 
     # Class methods ===========================================================
@@ -29,10 +29,6 @@ module Faceted
 
       def collected_class
         @collects
-      end
-
-      def scope
-        parent.to_s == "Object" ? "::" : "#{parent.to_s}::"
       end
 
     end

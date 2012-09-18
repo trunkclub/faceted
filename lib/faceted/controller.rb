@@ -9,7 +9,7 @@ module Faceted
         success:  obj.success,
         response: obj.to_hash,
         errors:   obj.errors
-      }.to_json
+      }
     end
 
     # For rendering a response with a multiple objects, e.g.
@@ -19,7 +19,7 @@ module Faceted
         success: true,
         response: {"#{key}".to_sym => array},
         errors:   nil
-      }.to_json
+      }
     end
 
     # In your base API controller:

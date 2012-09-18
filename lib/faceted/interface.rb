@@ -1,6 +1,6 @@
 module Faceted
 
-  module Presenter
+  module Interface
 
     include Faceted::HasObject
 
@@ -12,18 +12,17 @@ module Faceted
       base.extend Faceted::Model::ModelClassMethods
       base.send(:attr_accessor, :id)
       base.send(:attr_accessor, :errors)
-      base.send(:attr_accessor, :success)
     end
 
     module ClassMethods
 
       def klass
-        @presents
+        @wraps
       end
 
-      def presents(name, args={})
+      def wraps(name, args={})
         class_name = args[:class_name] || name.to_s.classify
-        @presents = eval(class_name)
+        @wraps = eval(class_name)
         define_method :"#{class_name.downcase}" do
           object
         end
