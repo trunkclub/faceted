@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "faceted"
   gem.homepage = "http://github.com/trunkclub/faceted"
   gem.license = "MIT"
-  gem.summary = %Q{Provides useful tools for API implementations.}
-  gem.description = %Q{Provides useful tools for API implementations.}
+  gem.summary = %Q{Faceted provides set of tools, patterns, and modules for use in API implementations.}
+  gem.description = %Q{Faceted provides set of tools, patterns, and modules for use in API implementations.}
   gem.email = "corey@trunkclub.com"
   gem.authors = ["Corey Ehmke", "Max Thom Stahl"]
   # dependencies defined in Gemfile

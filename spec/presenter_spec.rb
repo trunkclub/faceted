@@ -57,17 +57,24 @@ module MyApi
 
         it 'successfully' do
           musician = MyApi::Musician.new(:id => 1)
-          @ar_musician.should_receive(:save!) { true }
+          @ar_musician.should_receive(:save) { true }
           musician.save.should be_true
         end
 
         it 'handling failure' do
           musician = MyApi::Musician.new(:id => 1)
-          @ar_musician.should_receive(:save!) { false }
+          @ar_musician.should_receive(:save) { false }
           musician.save.should be_false
         end
 
-        it 'failing and populating its errors'
+        it 'failing and populating its errors' do
+          musician = MyApi::Musician.new(:id => 1)
+          @ar_musician.should_receive(:save) { false }
+          @ar_musician.stub_chain(:errors, :full_messages) { ["Something went wrong", "Terribly wrong"] }
+          musician.save
+          musician.errors.count.should == 2
+          musician.errors.last.should == "Terribly wrong"
+        end
 
       end
 

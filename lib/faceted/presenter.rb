@@ -96,7 +96,9 @@ module Faceted
 
     def save
       schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if object.respond_to?("#{k}=") }
-      object.save!
+      self.success = object.save
+      self.errors = object.errors && object.errors.full_messages
+      self.success
     end
 
     def to_hash
