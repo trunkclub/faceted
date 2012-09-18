@@ -31,7 +31,7 @@ module MyApi
 
   class Band
     include Faceted::Collector
-    collects :musicians, :class_name => 'Musician', :find_by => :birthplace_id
+    collects :musicians, :find_by => :birthplace_id
   end
 
   describe Band do
