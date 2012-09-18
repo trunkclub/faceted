@@ -3,6 +3,8 @@ faceted
 
 Faceted provides set of tools, patterns, and modules for use in API implementations.
 
+It was written and is maintained by Corey Ehmke (@bantik) and Max Thom Stahl (@villainous) at Trunk Club.
+
 Presenters
 ----------
 
@@ -99,5 +101,5 @@ Contributing to faceted
 
 Copyright
 =========
-Copyright (c) 2012 Corey Ehmke / Trunk Club. See LICENSE.txt for further details.
+Copyright (c) 2012 Trunk Club. See LICENSE.txt for further details.
 
