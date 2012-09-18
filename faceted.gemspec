@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "faceted"
-  s.version = "0.4.20"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ehmke", "Max Thom Stahl"]
-  s.date = "2012-09-17"
+  s.date = "2012-09-18"
   s.description = "Provides useful tools for API implementations."
   s.email = "corey@trunkclub.com"
   s.extra_rdoc_files = [
@@ -28,7 +28,9 @@ Gem::Specification.new do |s|
     "VERSION",
     "faceted.gemspec",
     "lib/faceted.rb",
+    "lib/faceted/collector.rb",
     "lib/faceted/presenter.rb",
+    "spec/collector_spec.rb",
     "spec/presenter_spec.rb",
     "spec/spec_helper.rb"
   ]
