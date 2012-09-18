@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "faceted"
-  s.version = "0.5.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ehmke", "Max Thom Stahl"]
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "faceted.gemspec",
     "lib/faceted.rb",
     "lib/faceted/collector.rb",
+    "lib/faceted/controller.rb",
     "lib/faceted/presenter.rb",
     "spec/collector_spec.rb",
     "spec/presenter_spec.rb",
