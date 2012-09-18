@@ -57,7 +57,7 @@ module Faceted
         objects.compact.inject([]) do |a, object|
           presenter = self.new
           presenter.send(:object=, object)
-          presenter.initialize_with_object
+          presenter.send(:initialize_with_object)
           a << presenter
         end
       end
