@@ -30,7 +30,14 @@ module Faceted
       end
 
       def where(args)
-        materialize(klass.where(args))
+        if klass.respond_to? :fields
+          # Mongoid
+          attrs = args.select{|k,v| klass.fields.keys.include? k.to_s}
+        else
+          # ActiveRecord et al
+          attrs = args.select{|k,v| klass.column_names.include? k.to_s}
+        end
+        materialize(klass.where(attrs))
       end
 
     end

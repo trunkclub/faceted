@@ -25,6 +25,10 @@ module Faceted
         obj
       end
 
+      def expose(name, args={})
+        field(name, args={})
+      end
+
       def field(name, args={})
         fields << name
         define_method :"#{name}" do
