@@ -88,6 +88,38 @@ Collectors are simply models that collect multiple instances of another model. A
     l.musicians.first.name
     => "American Music Club"
 
+Controllers
+-----------
+Wiring up your controllers is easy. Start with your base controller:
+
+    class MyApi::BaseController < ActionController::Base
+
+      require 'faceted'
+      include Faceted::Controller
+      before_filter :authenticate_user!
+      respond_to :json
+      rescue_from Exception, :with => :render_500
+      rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+
+    end
+
+Then create the controllers for your API-specific models:
+
+    class MyApi::MusiciansController < MyApi::BaseController
+
+      def show
+        @musician = MyApi::Musician.new(params)
+        render_response @musician
+      end
+
+      def update
+        @musician = MyApi::Musician.new(params)
+        @musician.save
+        render_response @musician
+      end
+
+    end
+
 Contributing to faceted
 =======================
 
