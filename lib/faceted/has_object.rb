@@ -33,6 +33,7 @@ module Faceted
       return false unless schema_fields
       schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if object.respond_to?("#{k}=") }
       self.success = object.save
+      self.id = object.id
       self.errors = object.errors && object.errors.full_messages
       self.success
     end
