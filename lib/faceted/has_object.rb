@@ -31,7 +31,7 @@ module Faceted
 
     def save
       return false unless schema_fields
-      schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if object.respond_to?("#{k}=") }
+      schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if self.send(:settable_field?, k) }
       self.success = object.save
       self.id = object.id
       self.errors = object.errors && object.errors.full_messages
@@ -61,6 +61,10 @@ module Faceted
     def object=(obj)
       @object = obj
       self.id = obj.id
+    end
+
+    def settable_field?(field_name)
+      self.respond_to?("#{field_name}=") && object.respond_to?("#{field_name}=")
     end
 
   end
