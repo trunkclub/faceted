@@ -34,8 +34,10 @@ module Faceted
         define_method :"#{name}" do
           instance_variable_get("@#{name}") || args[:default]
         end
-        define_method :"#{name}=" do |val|
-          instance_variable_set("@#{name}", val)
+        unless args[:read_only]
+          define_method :"#{name}=" do |val|
+            instance_variable_set("@#{name}", val)
+          end
         end
         build_association_from(name.to_s) if name.to_s.include?("id") && ! args[:skip_association]
       end
