@@ -13,6 +13,7 @@ module Faceted
         bare_name = field.gsub(/_id$/, '')
         if field =~ /_id$/
           klass = eval "#{scope}#{bare_name.classify}"
+          fields << bare_name
           define_method :"#{bare_name}" do
             klass.new(:id => self.send(field))
           end
