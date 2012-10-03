@@ -78,6 +78,7 @@ Collectors are simply models that collect multiple instances of another model. A
       class Playlist
         include Faceted::Collector
         collects :musicians, :find_by => :genre_id
+        collects :deejays #implicit find_by, using 'playlist_id'
       end
     end
 

@@ -59,10 +59,13 @@ module MyApi
 
       it 'initializes the associated objects in the correct namespace' do
         band = MyApi::Band.new(:birthplace_id => 1)
+        band.stub(:id) { 3 }
         MyApi::Musician.stub(:where) { [MyApi::Musician.new] }
         MyApi::Song.stub(:where) { [MyApi::Song.new] }
+        MyApi::Song.should_receive(:where).with('band_id' => 3)
         band.musicians.first.class.name.should == "MyApi::Musician"
         band.songs.first.class.name.should == "MyApi::Song"
+
       end
 
     end
