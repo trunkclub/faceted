@@ -19,7 +19,7 @@ module Faceted
 
       def collects(name, args={})
         @fields = [name]
-        find_by = args[:find_by] ? args[:find_by] : "#{name.to_s.downcase.singularize}_id"
+        find_by = args[:find_by] ? args[:find_by] : "#{self.class.name.underscore.singularize}_id"
         @collects ||= {}
         @collects[name.downcase] = eval "#{scope}#{args[:class_name] || name.to_s.classify}"
         define_method :"#{name.downcase}" do
