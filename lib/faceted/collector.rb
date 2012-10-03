@@ -19,17 +19,19 @@ module Faceted
 
       def collects(name, args={})
         @fields = [name]
-        @collects = eval "#{scope}#{args[:class_name] || name.to_s.classify}"
+        find_by = args[:find_by] ? args[:find_by] : "#{name.to_s.downcase.singularize}_id"
+        @collects ||= {}
+        @collects[name.downcase] = eval "#{scope}#{args[:class_name] || name.to_s.classify}"
         define_method :"#{name.downcase}" do
-          objects
+          objects(name.downcase.to_sym)
         end
-        define_method :finder do
-          {"#{args[:find_by]}" => self.send(args[:find_by])}
+        define_method :"#{name.downcase}_finder" do
+          {"#{find_by}" => self.send(find_by)}
         end
-        self.send(:attr_accessor, args[:find_by])
+        self.send(:attr_accessor, find_by)
       end
 
-      def collected_class
+      def collected_classes
         @collects
       end
 
@@ -51,9 +53,10 @@ module Faceted
 
     private
 
-    def objects
-      return unless self.class.collected_class
-      @objects ||= self.class.collected_class.where(self.finder)
+    def objects(klass)
+      return [] unless self.class.collected_classes
+      return [] unless self.class.collected_classes.keys.include?(klass)
+      self.class.collected_classes[klass].where(self.send("#{klass.to_s}_finder"))
     end
 
   end
