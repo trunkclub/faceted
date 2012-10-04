@@ -29,12 +29,16 @@ module Faceted
       self.success = true
     end
 
+    def reinitialize_with_object(obj)
+      schema_fields.each{ |k| self.send("#{k}=", obj.send(k)) if self.send(:settable_field?, k) }
+    end
+
     def save
       return false unless schema_fields
       schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if self.send(:settable_field?, k) }
       self.success = object.save
-      self.id = object.id
       self.errors = object.errors && object.errors.full_messages
+      self.reinitialize_with_object(object)
       self.success
     end
 
