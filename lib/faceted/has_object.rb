@@ -30,7 +30,7 @@ module Faceted
     end
 
     def reinitialize_with_object(obj)
-      schema_fields.each{ |k| self.send("#{k}=", obj.send(k)) if self.send(:settable_field?, k) }
+      schema_fields.each{ |k| self.send("#{k}=", obj.send(k)) if obj.respond_to?(k) && self.send(:settable_field?, k) }
     end
 
     def save
@@ -54,7 +54,7 @@ module Faceted
 
     def initialize_with_object
       return unless object
-      schema_fields.each{ |k| self.send("#{k}=", object.send(k)) if self.respond_to?("#{k}=") }
+      schema_fields.each{ |k| self.send("#{k}=", object.send(k)) if object.respond_to?(k) && self.respond_to?("#{k}=") }
     end
 
     def object
