@@ -18,10 +18,11 @@ Let's say that you have an ActiveRecord model called Musician, and you want to e
         presents :musician
         field :name
         field :genre
+        field :instrument, :default => 'guitar'
       end
     end
 
-That's actually all you have to do. The `presents` method maps your Musician presenter to a root-level class called `Musician`, and the `field` methods map to attributes *or* methods on the associated AR Musician instance.
+That's actually all you have to do. The `presents` method maps your Musician presenter to a root-level class called `Musician`, and the `field` methods map to attributes *or* methods on the associated AR Musician instance. If a default is set for a field, that default value will be stored when the presenter is used to create a record, unless overridden.
 
 What's that, you say? How is the appropriate AR Musican record associated? Simple. Invoke an instance of the `MyApi::Musician` passing in an `:id` parameter, and it just works:
 
