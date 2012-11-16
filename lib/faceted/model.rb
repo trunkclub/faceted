@@ -29,7 +29,8 @@ module Faceted
       def field(name, args={})
         fields << name
         define_method :"#{name}" do
-          instance_variable_get("@#{name}") || args[:default]
+          val = instance_variable_get("@#{name}")
+          val.nil? ? args[:default] : val
         end
         unless args[:read_only]
           define_method :"#{name}=" do |val|

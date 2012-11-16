@@ -22,14 +22,17 @@ module Faceted
     # Instance methods =======================================================
 
     def initialize(args={})
-      self.id = args[:id]
-      initialize_with_object
-      ! args.empty? && args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.blank? }
+      unless args.empty?
+        self.id = args[:id]
+        initialize_with_object
+        args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.nil? }
+      end
       self.errors = []
       self.success = true
     end
 
     def reinitialize_with_object(obj)
+      obj.reload
       schema_fields.each{ |k| self.send("#{k}=", obj.send(k)) if obj.respond_to?(k) && self.send(:settable_field?, k) }
     end
 
@@ -54,7 +57,7 @@ module Faceted
 
     def initialize_with_object
       return unless object
-      schema_fields.each{ |k| self.send("#{k}=", object.send(k)) if object.respond_to?(k) && self.respond_to?("#{k}=") }
+      schema_fields.each{|k| self.send("#{k}=", object.send(k)) if object.respond_to?(k) && self.respond_to?("#{k}=") }
     end
 
     def object
