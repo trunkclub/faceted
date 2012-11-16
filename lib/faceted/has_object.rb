@@ -31,6 +31,10 @@ module Faceted
       self.success = true
     end
 
+    def delete
+      self.success = object.delete
+    end
+
     def reinitialize_with_object(obj)
       obj.reload
       schema_fields.each{ |k| self.send("#{k}=", obj.send(k)) if obj.respond_to?(k) && self.send(:settable_field?, k) }
