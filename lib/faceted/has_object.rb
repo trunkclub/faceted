@@ -54,7 +54,7 @@ module Faceted
     end
 
     def to_hash
-      schema_fields.inject({}) {|h,k| h[k] = self.send(k); h}
+      schema_fields.inject({}) {|h,k| h[k] = self.send(k) if self.respond_to?(k); h}
     end
 
     private

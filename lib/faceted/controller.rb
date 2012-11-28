@@ -3,7 +3,7 @@ module Faceted
   module Controller
 
     # For rendering a response with a single object, e.g.
-    # render_response(@addresses)
+    # render_response(@address)
     def render_response(obj)
       render :json => {
         success:  obj.success,
