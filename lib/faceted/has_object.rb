@@ -22,6 +22,7 @@ module Faceted
     # Instance methods =======================================================
 
     def initialize(args={})
+      self.excludes = args.delete('excludes') || args.delete(:excludes)
       unless args.empty?
         self.id = args[:id]
         initialize_with_object
@@ -33,6 +34,14 @@ module Faceted
 
     def delete
       self.success = object.delete
+    end
+
+    def excludes=(value)
+      @excludes = value.nil? ? [] : value.map(&:to_sym)
+    end
+
+    def excludes
+      @excludes
     end
 
     def reinitialize_with_object(obj)
@@ -50,7 +59,7 @@ module Faceted
     end
 
     def schema_fields
-      self.class.fields
+      self.class.fields - self.excludes
     end
 
     def to_hash

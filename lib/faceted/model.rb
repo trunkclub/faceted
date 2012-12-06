@@ -41,7 +41,7 @@ module Faceted
       end
 
       def fields
-        @fields ||= [:id]
+        @fields ||= [:id, :excludes]
       end
 
       def materialize(objects=[])

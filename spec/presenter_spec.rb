@@ -59,6 +59,16 @@ module MyApi
           musician.alive.should_not be_nil
         end
 
+        it 'excludes fields' do
+          musician = MyApi::Musician.new(:id => 1, :excludes => [:rating])
+          musician.schema_fields.include?(:rating).should be_false
+        end
+
+        it 'excludes relations' do
+          musician = MyApi::Musician.new(:id => 1, :excludes => [:birthplace])
+          musician.schema_fields.include?(:birthplace).should be_false
+        end
+
       end
 
       it 'overwrites values from its AR counterpart' do
