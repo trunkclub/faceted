@@ -4,12 +4,12 @@ module Faceted
 
     # For rendering a response with a single object, e.g.
     # render_response(@address)
-    def render_response(obj)
+    def render_response(obj, code=nil)
       render :json => {
         success:  obj.success,
         response: obj.to_hash,
         errors:   obj.errors
-      }, :status => obj.success ? 200 : 400
+      }, :status => code || obj.success ? 200 : 400
     end
 
     # For rendering a response with a multiple objects, e.g.
@@ -18,7 +18,7 @@ module Faceted
       render :json => {
         success: true,
         response: {"#{key}".to_sym => array},
-        errors:   nil
+        errors: nil
       }
     end
 
@@ -28,8 +28,8 @@ module Faceted
       render :json => {
         success: false,
         response: nil,
-        errors: "Record not found: #{exception.message}"
-      }, :status => 404
+        errors: "#{exception.message}"
+      }, :status => 400
     end
 
     # In your base API controller:
