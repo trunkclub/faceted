@@ -9,7 +9,7 @@ module Faceted
         success:  obj.success,
         response: obj.to_hash,
         errors:   obj.errors
-      }
+      }, :status => obj.success ? 200 : 400
     end
 
     # For rendering a response with a multiple objects, e.g.
