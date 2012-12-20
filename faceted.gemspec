@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "faceted"
-  s.version = "1.1.0"
+  s.version = "1.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ehmke", "Max Thom Stahl"]
-  s.date = "2012-12-07"
+  s.date = "2012-12-20"
   s.description = "Faceted provides set of tools, patterns, and modules for use in API implementations."
   s.email = "corey@trunkclub.com"
   s.extra_rdoc_files = [
@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/trunkclub/faceted"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "1.8.23"
   s.summary = "Faceted provides set of tools, patterns, and modules for use in API implementations."
 
   if s.respond_to? :specification_version then
