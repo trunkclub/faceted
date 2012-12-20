@@ -31,8 +31,12 @@ module Faceted
 
       def where(args)
         if klass.respond_to? :fields
-          # Mongoid
-          attrs = args.select{|k,v| klass.fields.keys.include? k.to_s}
+          if klass.fields.respond_to?(:keys)
+            # Mongoid
+            attrs = args.select{|k,v| klass.fields.keys.include? k.to_s}
+          else
+            attrs = args.select{|k,v| klass.fields.include? k.to_s}
+          end
         else
           # ActiveRecord et al
           attrs = args.select{|k,v| klass.column_names.include? k.to_s}

@@ -59,7 +59,7 @@ module Faceted
     end
 
     def schema_fields
-      self.class.fields - self.excludes
+      self.class.fields - self.excludes - [:excludes]
     end
 
     def to_hash
