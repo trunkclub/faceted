@@ -14,6 +14,13 @@ class Birthplace # another make-believe AR model
   def reload; self; end
 end
 
+class Album # and yet another make-believe AR model
+  attr_accessor :id, :name
+  def initialize(params={}); params.each{|k,v| self.send("#{k}=",v) if self.respond_to?(k)}; end
+  def attributes; {:id => self.id, :name => self.name}; end
+  def reload; self; end
+end
+
 module MyApi
 
   class Birthplace
@@ -32,15 +39,21 @@ module MyApi
     field :alive
   end
 
+  class Album
+    include Faceted::Presenter
+    presents :album, :find_by => :name
+    field :name
+  end
+
   describe Musician do
 
     before do
 
       @ar_musician = ::Musician.new(:id => 1, :name => 'Johnny Cash', :rating => 'Good', :alive => false)
-      ::Musician.stub(:find) { @ar_musician }
+      ::Musician.stub(:where) { @ar_musician }
 
       @ar_birthplace = ::Birthplace.new(:id => 1, :city => 'Kingsland', :state => 'Arkansas')
-      ::Birthplace.stub(:find) { @ar_birthplace }
+      ::Birthplace.stub(:where) { @ar_birthplace }
 
     end
 
@@ -108,6 +121,13 @@ module MyApi
       it 'initializes the associated object in the correct namespace' do
         musician = MyApi::Musician.new(:id => 1, :birthplace_id => 1)
         musician.birthplace.city.should == 'Kingsland'
+      end
+
+      it 'initializes the associated object finding by a specified key' do
+        @ar_album = ::Album.new(:id => 1, :name => 'Greatest Hits')
+        ::Album.stub(:where) { @ar_album }
+        album = MyApi::Album.new(:name => 'Greatest Hits')
+        album.id.should == 1
       end
 
     end

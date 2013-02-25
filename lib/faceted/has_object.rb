@@ -75,7 +75,7 @@ module Faceted
 
     def object
       return unless self.class.klass
-      @object ||= self.id ? self.class.klass.find(self.id) : self.class.klass.new
+      @object ||= self.class.klass.where(find_by => self.send(find_by)) || self.class.klass.new
     end
 
     def object=(obj)

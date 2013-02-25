@@ -24,6 +24,9 @@ module Faceted
       def presents(name, args={})
         class_name = args[:class_name] || name.to_s.classify
         @presents = eval(class_name)
+        define_method :find_by do
+          args[:find_by] || :id
+        end
         define_method :"#{class_name.downcase}" do
           object
         end
