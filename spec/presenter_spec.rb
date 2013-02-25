@@ -50,10 +50,10 @@ module MyApi
     before do
 
       @ar_musician = ::Musician.new(:id => 1, :name => 'Johnny Cash', :rating => 'Good', :alive => false)
-      ::Musician.stub(:where) { @ar_musician }
+      ::Musician.stub(:where) { [@ar_musician] }
 
       @ar_birthplace = ::Birthplace.new(:id => 1, :city => 'Kingsland', :state => 'Arkansas')
-      ::Birthplace.stub(:where) { @ar_birthplace }
+      ::Birthplace.stub(:where) { [@ar_birthplace] }
 
     end
 
@@ -125,7 +125,7 @@ module MyApi
 
       it 'initializes the associated object finding by a specified key' do
         @ar_album = ::Album.new(:id => 1, :name => 'Greatest Hits')
-        ::Album.stub(:where) { @ar_album }
+        ::Album.stub(:where) { [@ar_album] }
         album = MyApi::Album.new(:name => 'Greatest Hits')
         album.id.should == 1
       end
