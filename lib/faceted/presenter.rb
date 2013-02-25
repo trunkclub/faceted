@@ -37,7 +37,7 @@ module Faceted
       end
 
       def find(id)
-        materialize(klass.where(id: id).first)
+        materialize(klass.where(id: id)).first
       end
 
       def where(args)
