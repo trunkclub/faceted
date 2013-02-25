@@ -25,6 +25,7 @@ module Faceted
       self.excludes = args.delete('excludes') || args.delete(:excludes)
       unless args.empty?
         self.id = args[:id]
+        args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.nil? }
         initialize_with_object
         args.symbolize_keys.delete_if{|k,v| v.nil?}.each{|k,v| self.send("#{k}=", v) if self.respond_to?("#{k}=") && ! v.nil? }
       end
@@ -75,7 +76,7 @@ module Faceted
 
     def object
       return unless self.class.klass
-      @object ||= self.class.klass.where(find_by => self.send(find_by)).first || self.class.klass.new
+      @object = self.class.klass.where(find_by => self.send(find_by)).first || self.class.klass.new
     end
 
     def object=(obj)
