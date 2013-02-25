@@ -32,6 +32,14 @@ module Faceted
         end
       end
 
+      def all
+        materialize(klass.all)
+      end
+
+      def find(id)
+        materialize(klass.where(id: id).first)
+      end
+
       def where(args)
         if klass.respond_to? :fields
           if klass.fields.respond_to?(:keys)
