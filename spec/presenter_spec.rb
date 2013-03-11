@@ -21,6 +21,13 @@ class Album # and yet another make-believe AR model
   def reload; self; end
 end
 
+class AlbumTrack
+  attr_accessor :id, :title
+  def initialize(params={}); params.each{|k,v| self.send("#{k}=",v) if self.respond_to?(k)}; end
+  def attributes; {:id => self.id, :title => self.name}; end
+  def reload; self; end
+end
+
 module MyApi
 
   class Birthplace
@@ -43,6 +50,12 @@ module MyApi
     include Faceted::Presenter
     presents :album, :find_by => :name
     field :name
+  end
+
+  class AlbumTrack
+    include Faceted::Presenter
+    presents :album_track
+    field :title
   end
 
   describe Musician do
@@ -128,6 +141,13 @@ module MyApi
         ::Album.stub(:where) { [@ar_album] }
         album = MyApi::Album.new(:name => 'Greatest Hits')
         album.id.should == 1
+      end
+
+      it 'does not choke on associated objects with underscores in their names' do
+        @ar_album_track = ::AlbumTrack.new(:id => 1, :title => 'The Gambler')
+        ::AlbumTrack.stub(:where) { [@ar_album_track] }
+        track = MyApi::AlbumTrack.new(:id => 1)
+        track.album_track.should == @ar_album_track
       end
 
     end

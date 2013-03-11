@@ -22,12 +22,12 @@ module Faceted
       end
 
       def presents(name, args={})
-        class_name = args[:class_name] || name.to_s.classify
+        class_name = args[:class_name] || name.to_s.classify # LineItem
         @presents = eval(class_name)
         define_method :find_by do
           args[:find_by] || :id
         end
-        define_method :"#{class_name.downcase}" do
+        define_method :"#{name}" do
           object
         end
       end
