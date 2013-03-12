@@ -51,11 +51,11 @@ module Faceted
     end
 
     def save
-      return false unless schema_fields
-      schema_fields.each{ |k| object.send("#{k}=", self.send(k)) if self.send(:settable_field?, k) }
+      return false unless schema_fields.present?
+      schema_fields.each{ |k| self.send(:object).send("#{k}=", self.send(k)) if self.send(:settable_field?, k) }
       self.success = object.save
       self.errors = object.errors && object.errors.full_messages
-      self.reinitialize_with_object(object)
+      self.reinitialize_with_object(object) if self.success
       self.success
     end
 
@@ -76,12 +76,16 @@ module Faceted
 
     def object
       return unless self.class.klass
-      @object = self.class.klass.where(find_by => self.send(find_by)).first || self.class.klass.new
+      if self.send(find_by).present?
+        @object ||= self.class.klass.where(find_by => self.send(find_by)).first
+      else
+        @object ||= self.class.klass.new
+      end
     end
 
     def object=(obj)
       @object = obj
-      self.id = obj.id
+      self.id = obj.id if obj.id.present?
     end
 
     def settable_field?(field_name)
