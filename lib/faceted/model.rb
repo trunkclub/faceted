@@ -44,7 +44,11 @@ module Faceted
         @fields ||= [:id, :excludes]
       end
 
-      def materialize(objects=[], args={})
+      def from(object, args={})
+        materialize([object], args).first
+      end
+
+     def materialize(objects=[], args={})
         objects.compact.inject([]) do |a, object|
           interface = self.new(args)
           interface.send(:object=, object)

@@ -70,6 +70,20 @@ module MyApi
 
     end
 
+    describe 'initialized with an instantiated object' do
+
+      let(:musician_presenter) { MyApi::Musician.from(@ar_musician) }
+
+      it 'accepts an object' do
+        musician_presenter.send(:object).should == @ar_musician
+      end
+
+      it 'initializes with the attributes of the object' do
+        musician_presenter.name.should == 'Johnny Cash'
+      end
+
+    end
+
     describe 'initialized with a presented object' do
 
       describe 'inherits values from its AR counterpart' do
