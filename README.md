@@ -71,6 +71,42 @@ You can also explicitly declare the class of the association:
 
   field :genre_id, :class_name => 'MusicalGenre'
 
+Presenters from Existing Models
+----
+In your controllers, you will typically be using one of three methods to instantiate a presenter: `new`, `materialize`, or `from`.
+
+### new
+
+This method is used to retrieve and instantiate a persisted model based on an `id`:
+
+	m = Musician.create(:name => 'Bauhaus', :genre => 'Goth')	m.id
+    => 213
+
+    presenter = MyApi::Musician.new(:id => 213)
+    presenter.name
+    => "Bauhaus"
+
+### materialize
+
+Have an array of objects that you need translated into presenters? No problem. Use the `materialize` class method on the presenter class:
+
+		musicians = [
+			::Musician.new(:name => 'Love and Rockets'),
+			::Musician.new(:name => 'The Pixies')
+		]
+		presenters = MyApi::Musician.materialize(musicians)
+		presenters.first.name
+		=> 'Love and Rockets'
+
+### from
+
+If you have an single instance of a persisted model already loaded, or if you're presenting a class that does not get read from a database (e.g. an object from an API response), you can use the `from` class method to materialize a single presenter object:
+
+		musician_from_json_response = ::Musician.new(:name => 'Dust and a Shadow')
+		presenter = MyApi::Musician.from(musician_from_json_response)
+		presenter.name
+		=> 'Dust and a Shadow'
+
 Collectors
 ----------
 Collectors are simply models that collect multiple instances of another model. An example:
