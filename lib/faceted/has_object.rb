@@ -42,7 +42,7 @@ module Faceted
     end
 
     def excludes
-      @excludes
+      @excludes ||= []
     end
 
     def reinitialize_with_object(obj)
